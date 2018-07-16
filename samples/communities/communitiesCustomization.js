@@ -46,7 +46,7 @@ if(typeof(dojo) != "undefined") {
 									'<td>' +
 										'<table class="lotusTable" style="width: 650px;" cellpadding="0" cellspacing="0" border="0" role="presentation">' +
 											'<tbody>' +
-												'<tr><td><a onClick="myDialog.show();" href="#">Gerer les groupes Dominos</a></td></tr>' +
+												'<tr><td><a onClick="myDialog.show();return false;" href="#">Gerer les groupes Dominos</a></td></tr>' +
 											'</tbody>' +
 										'</table>' +
 									'</td>' +
@@ -82,3 +82,7 @@ if(typeof(dojo) != "undefined") {
 		handleHashChangeEvent();
 	});	
 }
+
+require(["dojo/parser"], function(parser){
+  parser.parse();
+});
