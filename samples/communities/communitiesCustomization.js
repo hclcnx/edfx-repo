@@ -5,7 +5,7 @@
 // @date May, 2018
 //
 if(typeof(dojo) != "undefined") {
-	require(["dojo/domReady!"], function() {
+	require(["dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function() {
 		 
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
@@ -24,12 +24,29 @@ if(typeof(dojo) != "undefined") {
 		var addGroupsLink = function() {
 		
 			if (!dojo.byId("manageGroups")) {
-				var addGroups = '<tr id="manageGroups" class="lotusFormFieldRow"> '+
+				var addGroups = '<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address">'+
+									'<table class="dijitDialogPaneContentArea">'+
+								      ' <tr>'+
+								        '    <td><label for="name">Name:</label></td>'+
+								          '  <td><input data-dojo-type="dijit/form/TextBox" name="name" id="name"></td>'+
+								       ' </tr>'+
+								       ' <tr>'+
+								           ' <td><label for="address">Address:</label></td>'+
+								          '  <td><input data-dojo-type="dijit/form/TextBox" name="address" id="address"></td>'+
+								        '</tr>'+
+								    '</table>'+
+						
+								  '  <div class="dijitDialogPaneActionBar">'+
+								       ' <button data-dojo-type="dijit/form/Button" type="submit" id="ok">OK</button>'+
+								       ' <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){myDialog.hide();}"  id="cancel">Cancel</button>'+
+								    '</div>'+
+								'</div>'+
+								'<tr id="manageGroups" class="lotusFormFieldRow"> '+
 									'<td width="130px" class="lotusFormLabel" style="padding-top: 10px;">Groupes :</td>' +
 									'<td>' +
 										'<table class="lotusTable" style="width: 650px;" cellpadding="0" cellspacing="0" border="0" role="presentation">' +
 											'<tbody>' +
-												'<tr><td><a href="http://www.google.fr">Gérer les groupes</a></td></tr>' +
+												'<tr><td><a onClick="myDialog.show();" href="#">Gerer les groupes Dominos</a></td></tr>' +
 											'</tbody>' +
 										'</table>' +
 									'</td>' +
@@ -39,7 +56,6 @@ if(typeof(dojo) != "undefined") {
 					dojo.place(addGroups,	dojo.query("#addAllParentMembersRow")[0],"before")
 				}
 			}
-			
 		}
 		
 		
