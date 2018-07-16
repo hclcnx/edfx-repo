@@ -24,7 +24,7 @@ if(typeof(dojo) != "undefined") {
 		var addGroupsLink = function() {
 		
 			if (!dojo.byId("manageGroups")) {
-				var addGroups = '<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address">'+
+				var addGroups = '<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address" style="background: #FFFFFF; border-radius: 5px; padding: 10px !important; border: 1px solid black;">'+
 									'<table class="dijitDialogPaneContentArea">'+
 								      ' <tr>'+
 								        '    <td><label for="name">Name:</label></td>'+
@@ -53,8 +53,12 @@ if(typeof(dojo) != "undefined") {
 									'<td width="50px" class="lotusFormLabel"/>' +
 								'</tr>';
 				if (dojo.query("#addAllParentMembersRow") && dojo.query("#addAllParentMembersRow")[0]) {
-					dojo.place(addGroups,	dojo.query("#addAllParentMembersRow")[0],"before")
-				}
+					dojo.place(addGroups,	dojo.query("#addAllParentMembersRow")[0],"before");
+					
+					require(["dojo/parser"], function(parser){
+					  parser.parse();
+					});
+				}				
 			}
 		}
 		
@@ -62,7 +66,7 @@ if(typeof(dojo) != "undefined") {
 		var renderMemberGroupCreateForm = function() {
 			require(["dojo/aspect"], function(aspect) { 
 				aspect.after(dojo,"displayMemberCreateForm", addGroupsLink(), true) 
-			});
+			});			
 		};
 		
 		function handleHashChangeEvent() {
@@ -82,7 +86,3 @@ if(typeof(dojo) != "undefined") {
 		handleHashChangeEvent();
 	});	
 }
-
-require(["dojo/parser"], function(parser){
-  parser.parse();
-});
