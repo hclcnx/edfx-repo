@@ -1,0 +1,27 @@
+{
+  "extensions": [
+    {
+      "path": "communities",
+      "application": "Communities Customization",
+      "payload": {
+	  "match": {
+		"url": "fullpageWidgetId=Members"
+		},
+        "include-files": [
+          "samples/communities/communitiesCustomization.js"
+        ],
+        "include-repo": {
+          "name": "communities-groups"
+        }
+      },
+      "name": "Communities Customization Extension",
+      "type": "com.ibm.customizer.ui"
+    }
+  ],
+  "name": "Communities Customization",
+  "description": "Add group management into communities",
+  "services": [
+    "Customizer"
+  ],
+  "title": "Communities Customization"
+}
