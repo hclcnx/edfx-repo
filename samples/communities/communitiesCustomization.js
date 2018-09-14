@@ -5,7 +5,7 @@
 // @date May, 2018
 //
 if(typeof(dojo) != "undefined") {
-	require(["dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function() {
+	require(["dijit/form/FilteringSelect", "dojo/data/ItemFileReadStore", "dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function(FilteringSelect, ItemFileReadStore) {
 		 
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
@@ -198,6 +198,21 @@ if(typeof(dojo) != "undefined") {
 				}				
 			}
 		};
+		
+		var stateStore = new ItemFileReadStore({
+	        url: "https://edfx-nomad21:8443/ConnectionsCloud/GetDominoGroups"
+	    });
+
+		var select = new FilteringSelect({
+			name: "icxcommunitygroupadd",
+			placeHolder: "Select a Group",
+			store: stateStore,
+			onChange: function(val){
+			document.getElementById("value").innerHTML = val;
+			document.getElementById("displayedValue").innerHTML = this.get("displayedValue");
+			}
+		}, "icxcommunitygroupadd");
+		select.startup();
 		
 		var renderMemberGroupCreateForm = function() {
 			require(["dojo/aspect"], function(aspect) { 
