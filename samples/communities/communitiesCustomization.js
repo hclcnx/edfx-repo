@@ -204,13 +204,10 @@ if(typeof(dojo) != "undefined") {
 	    });
 
 		var select = new FilteringSelect({
-			name: "icxcommunitygroupadd",
+			name: "name",
 			placeHolder: "Select a Group",
 			store: stateStore,
-			onChange: function(val){
-			document.getElementById("value").innerHTML = val;
-			document.getElementById("displayedValue").innerHTML = this.get("displayedValue");
-			}
+			searchAttr: "name"
 		}, "icxcommunitygroupadd");
 		select.startup();
 		
