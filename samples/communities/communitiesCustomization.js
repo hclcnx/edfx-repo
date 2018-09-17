@@ -195,21 +195,21 @@ if(typeof(dojo) != "undefined") {
 					
 					getCommunityGroups();
 					getCommunityMembers();
+					
+					var stateStore = new ItemFileReadStore({
+				        url: "https://edfx-nomad21:8443/ConnectionsCloud/GetDominoGroups"
+				    });
+
+					var select = new FilteringSelect({
+						name: "name",
+						placeHolder: "Select a Group",
+						store: stateStore,
+						searchAttr: "name"
+					}, "icxcommunitygroupadd");
+					select.startup();
 				}				
 			}
 		};
-		
-		var stateStore = new ItemFileReadStore({
-	        url: "https://edfx-nomad21:8443/ConnectionsCloud/GetDominoGroups"
-	    });
-
-		var select = new FilteringSelect({
-			name: "name",
-			placeHolder: "Select a Group",
-			store: stateStore,
-			searchAttr: "name"
-		}, "icxcommunitygroupadd");
-		select.startup();
 		
 		var renderMemberGroupCreateForm = function() {
 			require(["dojo/aspect"], function(aspect) { 
