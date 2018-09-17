@@ -54,7 +54,7 @@ if(typeof(dojo) != "undefined") {
 		var removeCommunityGroup = function(groupName) {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -72,7 +72,7 @@ if(typeof(dojo) != "undefined") {
 		var removeCommunityMember = function(memberName, memberEmail) {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -90,7 +90,7 @@ if(typeof(dojo) != "undefined") {
 		var addCommunityGroup = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("icxcommunitygroupadd").value,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("icxcommunitygroupadd").value,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -108,7 +108,7 @@ if(typeof(dojo) != "undefined") {
 		var addCommunityMember = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -126,7 +126,7 @@ if(typeof(dojo) != "undefined") {
 		var getCommunityGroups = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -144,7 +144,7 @@ if(typeof(dojo) != "undefined") {
 		var getCommunityMembers = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-nomad21:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
 					"Content-Type" : "application/json"
@@ -186,6 +186,7 @@ if(typeof(dojo) != "undefined") {
 									'</td>' +
 									'<td width="50px" class="lotusFormLabel"/>' +
 								'</tr>';
+				
 				if (dojo.query("#addAllParentMembersRow") && dojo.query("#addAllParentMembersRow")[0]) {
 					dojo.place(addGroups, dojo.query("#addAllParentMembersRow")[0], "before");
 					
@@ -197,7 +198,7 @@ if(typeof(dojo) != "undefined") {
 					getCommunityMembers();
 					
 					var stateStore = new ItemFileReadStore({
-				        url: "https://edfx-nomad21:8443/ConnectionsCloud/GetDominoGroups"
+				        url: "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetDominoGroups"
 				    });
 
 					var select = new FilteringSelect({
