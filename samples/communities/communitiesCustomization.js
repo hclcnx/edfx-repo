@@ -7,9 +7,6 @@
 if(typeof(dojo) != "undefined") {
 	require(["dijit/form/FilteringSelect", "dojo/data/ItemFileReadStore", "dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function(FilteringSelect, ItemFileReadStore) {
 		 
-		var clientId = 'ldc';
-		var clientSecret = '84ced955-2274-4684-9689-8291b159f8f9';
-		
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
 			if(!waitTime) var waitTime = 100;  // 1000=1 second
@@ -60,10 +57,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -81,10 +75,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -102,10 +93,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -125,10 +113,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -148,10 +133,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -168,13 +150,10 @@ if(typeof(dojo) != "undefined") {
 		var getCommunityMembers = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid=b33aa70e-6298-41c1-900e-d560f36a61fd",
 				handleAs : "json",
 				headers : {
-					"Access-Control-Allow-Origin": "*",
-					"Content-Type" : "application/json",
-					"X-IBM-Client-Id": clientId,
-                    "X-IBM-Client-Secret": clientSecret
+					"Content-Type" : "application/json"
 				},
 
 				load : function(data) {
@@ -222,9 +201,6 @@ if(typeof(dojo) != "undefined") {
 					require(["dojo/parser"], function(parser){
 					  parser.parse();
 					});
-					
-					var clientId = 'ldc';
-					var clientSecret = '84ced955-2274-4684-9689-8291b159f8f9';
 					
 					getCommunityGroups();
 					getCommunityMembers();
