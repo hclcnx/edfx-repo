@@ -4,6 +4,153 @@
 // @version 0.1
 // @date May, 2018
 //
+var displayLastSyncDate = function(data) {
+	var date = new Date(data); ;
+	dojo.query("#icxsynchdate")[0].innerHTML = "Le "+ date.getDate() + "/" + (date.getMonth()+1)+ "/" + date.getFullYear();
+};
+
+var displayCommunityGroups = function (data){
+	var groupName = '';
+	dojo.query(".communitygroup").forEach(function(node){
+		dojo.query(node).style("display", "none");		  
+	});
+	for(var i=1; i<data.length; i++){
+		console.log(data[i].groupName);
+		groupName = '<tr class="communitygroup"><td>'+data[i].groupName+'</td><td><a onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
+		dojo.place(groupName, dojo.query("#icxcommunitygrouplist")[0], "after");
+	}
+	displayLastSyncDate(data[0].date);
+};
+
+var displayCommunityMembers = function (data){
+	var memberName = '';
+	dojo.query(".communitymember").forEach(function(node){
+		dojo.query(node).style("display", "none");		  
+	});
+	for(var i=1; i<data.length; i++){
+		console.log(data[i].memberName);
+		memberName = '<tr class="communitymember"><td>'+data[i].memberName+'</td><td><a onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
+		dojo.place(memberName, dojo.query("#icxcommunitymemberlist")[0], "after");
+	}
+	displayLastSyncDate(data[0].date);
+};
+
+var removeCommunityGroup = function(groupName) {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			displayCommunityGroups(data);
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+
+var removeCommunityMember = function(memberName, memberEmail) {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			displayCommunityMembers(data);
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+
+var addCommunityGroup = function() {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			if(data != null){
+				displayCommunityGroups(data);
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+
+var addCommunityMember = function() {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			if(data != null){
+				displayCommunityMembers(data);
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+
+var getCommunityGroups = function() {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			if(data != null){
+				displayCommunityGroups(data);
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+
+var getCommunityMembers = function() {
+
+	dojo.xhrGet({
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid=b33aa70e-6298-41c1-900e-d560f36a61fd",
+		handleAs : "json",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+
+		load : function(data) {
+			if(data != null){
+				displayCommunityMembers(data);
+			}
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+};
+		
 if(typeof(dojo) != "undefined") {
 	require(["dijit/form/FilteringSelect", "dojo/data/ItemFileReadStore", "dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function(FilteringSelect, ItemFileReadStore) {
 		 
@@ -18,153 +165,6 @@ if(typeof(dojo) != "undefined") {
 			  clearInterval(intId);
 			  callback();
 			}, waitTime);
-		};
-		
-		var displayLastSyncDate = function(data) {
-			var date = new Date(data); ;
-			dojo.query("#icxsynchdate")[0].innerHTML = "Le "+ date.getDate() + "/" + (date.getMonth()+1)+ "/" + date.getFullYear();
-		};
-		
-		var displayCommunityGroups = function (data){
-			var groupName = '';
-			dojo.query(".communitygroup").forEach(function(node){
-				dojo.query(node).style("display", "none");		  
-			});
-			for(var i=1; i<data.length; i++){
-				console.log(data[i].groupName);
-				groupName = '<tr class="communitygroup"><td>'+data[i].groupName+'</td><td><a onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
-				dojo.place(groupName, dojo.query("#icxcommunitygrouplist")[0], "after");
-			}
-			displayLastSyncDate(data[0].date);
-		};
-		
-		var displayCommunityMembers = function (data){
-			var memberName = '';
-			dojo.query(".communitymember").forEach(function(node){
-				dojo.query(node).style("display", "none");		  
-			});
-			for(var i=1; i<data.length; i++){
-				console.log(data[i].memberName);
-				memberName = '<tr class="communitymember"><td>'+data[i].memberName+'</td><td><a onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
-				dojo.place(memberName, dojo.query("#icxcommunitymemberlist")[0], "after");
-			}
-			displayLastSyncDate(data[0].date);
-		};
-		
-		var removeCommunityGroup = function(groupName) {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					displayCommunityGroups(data);
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		};
-		
-		var removeCommunityMember = function(memberName, memberEmail) {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					displayCommunityMembers(data);
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		};
-		
-		var addCommunityGroup = function() {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					if(data != null){
-						displayCommunityGroups(data);
-					}
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		};
-		
-		var addCommunityMember = function() {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					if(data != null){
-						displayCommunityMembers(data);
-					}
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		};
-		
-		var getCommunityGroups = function() {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					if(data != null){
-						displayCommunityGroups(data);
-					}
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
-		};
-		
-		var getCommunityMembers = function() {
-
-			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid=b33aa70e-6298-41c1-900e-d560f36a61fd",
-				handleAs : "json",
-				headers : {
-					"Content-Type" : "application/json"
-				},
-
-				load : function(data) {
-					if(data != null){
-						displayCommunityMembers(data);
-					}
-				},
-				error : function(error) {
-					console.log(error);
-				}
-			});
 		};
 		
 		var addGroupsLink = function() {
