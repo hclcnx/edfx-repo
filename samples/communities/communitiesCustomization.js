@@ -217,6 +217,9 @@ if(typeof(dojo) != "undefined") {
 					  parser.parse();
 					});
 					
+					var clientId = 'ldc';
+					var clientSecret = '84ced955-2274-4684-9689-8291b159f8f9';
+					
 					getCommunityGroups();
 					getCommunityMembers();
 					
