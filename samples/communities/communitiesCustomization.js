@@ -60,6 +60,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
@@ -80,6 +81,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
@@ -100,6 +102,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
@@ -122,6 +125,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
@@ -144,6 +148,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
@@ -166,6 +171,7 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
+					"Access-Control-Allow-Origin": "*",
 					"Content-Type" : "application/json",
 					"X-IBM-Client-Id": clientId,
                     "X-IBM-Client-Secret": clientSecret
