@@ -226,7 +226,7 @@ if(typeof(dojo) != "undefined") {
 
 					var select = new FilteringSelect({
 						name: "dijiticxcommunitygroupadd",
-						id: "dijiticxcommunitygroupadd"
+						id: "dijiticxcommunitygroupadd",
 						placeHolder: "Select a Group",
 						store: stateStore,
 						searchAttr: "name"
