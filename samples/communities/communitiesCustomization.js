@@ -7,8 +7,8 @@
 if(typeof(dojo) != "undefined") {
 	require(["dijit/form/FilteringSelect", "dojo/data/ItemFileReadStore", "dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function(FilteringSelect, ItemFileReadStore) {
 		 
-		var clientId: '8e77b85d-c000-400c-a8cd-c95c23102657';
-		var clientSecret: 'mf6bd775--eb08';
+		var clientId = 'ldc';
+		var clientSecret = '84ced955-2274-4684-9689-8291b159f8f9';
 		
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
