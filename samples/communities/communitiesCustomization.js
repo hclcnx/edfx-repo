@@ -7,6 +7,9 @@
 if(typeof(dojo) != "undefined") {
 	require(["dijit/form/FilteringSelect", "dojo/data/ItemFileReadStore", "dijit/Dialog", "dijit/form/TextBox", "dijit/form/Button", "dojo/domReady!"], function(FilteringSelect, ItemFileReadStore) {
 		 
+		var clientId: '8e77b85d-c000-400c-a8cd-c95c23102657';
+		var clientSecret: 'mf6bd775--eb08';
+		
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
 			if(!waitTime) var waitTime = 100;  // 1000=1 second
@@ -57,7 +60,9 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
@@ -75,7 +80,9 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
@@ -90,14 +97,18 @@ if(typeof(dojo) != "undefined") {
 		var addCommunityGroup = function() {
 
 			dojo.xhrGet({
-				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("icxcommunitygroupadd").value,
+				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
-					displayCommunityGroups(data);
+					if(data != null){
+						displayCommunityGroups(data);
+					}
 				},
 				error : function(error) {
 					console.log(error);
@@ -111,11 +122,15 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").value+"&memberEmail="+dojo.byId("icxcommunitymemberadd").value,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
-					displayCommunityMembers(data);
+					if(data != null){
+						displayCommunityMembers(data);
+					}
 				},
 				error : function(error) {
 					console.log(error);
@@ -129,11 +144,15 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
-					displayCommunityGroups(data);
+					if(data != null){
+						displayCommunityGroups(data);
+					}
 				},
 				error : function(error) {
 					console.log(error);
@@ -147,11 +166,15 @@ if(typeof(dojo) != "undefined") {
 				url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
 				handleAs : "json",
 				headers : {
-					"Content-Type" : "application/json"
+					"Content-Type" : "application/json",
+					"X-IBM-Client-Id": clientId,
+                    "X-IBM-Client-Secret": clientSecret
 				},
 
 				load : function(data) {
-					displayCommunityMembers(data);
+					if(data != null){
+						displayCommunityMembers(data);
+					}
 				},
 				error : function(error) {
 					console.log(error);
@@ -202,7 +225,8 @@ if(typeof(dojo) != "undefined") {
 				    });
 
 					var select = new FilteringSelect({
-						name: "name",
+						name: "dijiticxcommunitygroupadd",
+						id: "dijiticxcommunitygroupadd"
 						placeHolder: "Select a Group",
 						store: stateStore,
 						searchAttr: "name"
