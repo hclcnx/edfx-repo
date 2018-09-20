@@ -162,7 +162,6 @@ var addMemberInInput = function(membername, membermail){
 	dojo.query("#icxcommunitymemberadd")[0].membername = membername;
 	dojo.query("#icxcommunitymemberadd")[0].membermail = membermail;
 	dojo.query("#icxcommunitymemberadd")[0].value = membername;
-	alert(membername);
 };
 
 require(["dojo/store/JsonRest"], function(JsonRest){
@@ -178,11 +177,11 @@ var changeMemberInput = function(){
 		count: 10
 	}).then(function(results){
 		dojo.query(".jsonrestmember").forEach(dojo.destroy);
-		dojo.query("#dijiticxcommunitymemberadd").style("display","")
+		dojo.query("#dijiticxcommunitymemberadd").style("display","");
 		if(results != null){
 			var i = 0;
 			while(i<results.items.length){
-				dojo.place("<div class=\"jsonrestmember dijitReset dijitMenuItem\" onclick=\"addMemberInInput('"+results.items[i].f+"','"+results.items[i].e+"')\">"+results.items[i].f+"</div>", dojo.query("#icxcommunitymemberlist")[0], "after");
+				dojo.place("<div class=\"jsonrestmember dijitReset dijitMenuItem\" onclick=\"addMemberInInput('"+results.items[i].f+"','"+results.items[i].e+"')\">"+results.items[i].f+"</div>", dojo.query("#icxcommunitymemberinputlist")[0], "after");
 				i = eval(i + 1);
 			};
 		}
@@ -214,9 +213,18 @@ if(typeof(dojo) != "undefined") {
 										'<tr><td><table><tr><td>Ajout d un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
 										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><table><tr><td>Ajout d un membre</td><td><div id="dijiticxcommunitymemberadd" class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
-										'<div class="dijitReset dijitInputField dijitInputContainer"><input id="icxcommunitymemberadd" oninput="changeMemberInput()" autocomplete="off" type="text" class="dijitReset dijitInputInner"><div class="dijitPopup dijitComboBoxMenuPopup" style="visibility: visible; z-index: 1000; height: auto; overflow: visible;">'+
-										'<div class="dijitReset dijitMenu dijitComboBoxMenu" style="overflow: hidden auto; top: 0px; visibility: visible; width: 180.4px;"><div id="icxcommunitymemberlist"></div></div></div></td><td><button id="icxmemberadd" onclick="addCommunityMember();return false;">Ajouter</button></td></tr></table></td></tr>'+
+										'<tr><td><table><tr><td>Ajout d un membre</td><td>'+
+										'<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
+											'<div class="dijitReset dijitInputField dijitInputContainer">'+
+												'<input id="icxcommunitymemberadd" oninput="changeMemberInput()" autocomplete="off" type="text" class="dijitReset dijitInputInner">'+
+											'</div>'+
+										'</div>'+
+										'<div id="dijiticxcommunitymemberadd" class="dijitPopup dijitComboBoxMenuPopup" style="visibility: visible; z-index: 1000; height: auto; overflow: visible;" onmouseleave="leaveMemberInput()">'+
+											'<div class="dijitReset dijitMenu dijitComboBoxMenu" style="overflow: hidden auto; top: 0px; visibility: visible; width: 180.4px;">'+
+												'<div id="icxcommunitymemberinputlist"></div>'+
+											'</div>'+
+										'</div>'+
+										'</td><td><button id="icxmemberadd" onclick="addCommunityMember();return false;">Ajouter</button></td></tr></table></td></tr>'+
 										'<tr><td><table><tr id="icxcommunitymemberlist"><td>Membres de la communauté</td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><span>Date de la dernière synchronisation:&nbsp;</span><span id="icxsynchdate"></span></td></tr><tr><td><a onclick="myDialog.hide();return false;" href="#">Retour à Connections</a></td></tr>'+
