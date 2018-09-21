@@ -35,13 +35,15 @@ var displayCommunityMembers = function (data){
 	displayLastSyncDate(data[0].date);
 };
 
+var ibmkey = "84ced955-2274-4684-9689-8291b159f8f9";
+
 var removeCommunityGroup = function(groupName) {
 
 	dojo.xhrGet({
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -59,7 +61,7 @@ var removeCommunityMember = function(memberName, memberEmail) {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -77,7 +79,7 @@ var addCommunityGroup = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -97,7 +99,7 @@ var addCommunityMember = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").membername+"&memberEmail="+dojo.byId("icxcommunitymemberadd").membermail,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -117,7 +119,7 @@ var getCommunityGroups = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -137,7 +139,7 @@ var getCommunityMembers = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid=b33aa70e-6298-41c1-900e-d560f36a61fd",
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json"
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
 		},
 
 		load : function(data) {
@@ -210,13 +212,13 @@ if(typeof(dojo) != "undefined") {
 				var addGroups = '<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address" style="background: #FFFFFF; border-radius: 5px; padding: 10px !important; border: 1px solid black; width:400px">'+
 									'<table><tr><td><h3>Gestion des groupes de la communauté <span id="icxcommunityname"></span></h3></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><table><tr><td>Ajout d un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
+										'<tr><td><table><tr><td>Ajout d\'un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
 										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><table><tr><td>Ajout d un membre</td><td>'+
+										'<tr><td><table><tr><td>Ajout d\'un membre</td><td>'+
 										'<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
 											'<div class="dijitReset dijitInputField dijitInputContainer">'+
-												'<input id="icxcommunitymemberadd" oninput="changeMemberInput()" autocomplete="off" type="text" class="dijitReset dijitInputInner">'+
+												'<input id="icxcommunitymemberadd" oninput="changeMemberInput()" onfocus="this.value=\'\'" autocomplete="off" type="text" class="dijitReset dijitInputInner">'+
 											'</div>'+
 										'</div>'+
 										'<div id="dijiticxcommunitymemberadd" class="dijitPopup dijitComboBoxMenuPopup" style="visibility: visible; z-index: 1000; height: auto; overflow: visible;" onmouseleave="leaveMemberInput()">'+
@@ -232,15 +234,7 @@ if(typeof(dojo) != "undefined") {
 								  '  <div class="dijitDialogPaneActionBar"></div>'+
 								'</div>'+
 								'<tr id="manageGroups" class="lotusFormFieldRow"> '+
-									'<td width="130px" class="lotusFormLabel" style="padding-top: 10px;">Groupes :</td>' +
-									'<td>' +
-										'<table class="lotusTable" style="width: 650px;" cellpadding="0" cellspacing="0" border="0" role="presentation">' +
-											'<tbody>' +
-												'<tr><td><a onClick="myDialog.show();return false;" href="#">Gerer les groupes Dominos</a></td></tr>' +
-											'</tbody>' +
-										'</table>' +
-									'</td>' +
-									'<td width="50px" class="lotusFormLabel"/>' +
+									'<td><a onClick="myDialog.show();return false;" href="#">Gestion des membres</a></td>' +
 								'</tr>';
 				
 				if (dojo.query("#addAllParentMembersRow") && dojo.query("#addAllParentMembersRow")[0]) {
@@ -254,7 +248,7 @@ if(typeof(dojo) != "undefined") {
 					getCommunityMembers();
 					
 					var stateStore = new ItemFileReadStore({
-				        url: "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetDominoGroups"
+				        url: "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetDominoGroups?ibmkey="+ibmkey
 				    });
 
 					var select = new FilteringSelect({
