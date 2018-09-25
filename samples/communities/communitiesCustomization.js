@@ -1,38 +1,137 @@
 ////
 // @author Nicolas Lantheaume / EDIFIXIO
 // @name Communities Customization
-// @version 0.1
-// @date May, 2018
+// @version 0.2
+// @date September, 2018
 //
+var dropUpload_input2 = function dropUpload_input2() {
+
+	var files = document.getElementById("newfileinput2").files;
+
+	for (var i = 0; i < files.length; i++) {
+		upload_bd(files[i], i, files.length - 1);
+	}
+};
+	
+var upload_bd = function (file, i, size) {
+	var file_name_bd = file.name;
+
+	var form_data = new FormData();
+	form_data.append("file", file);
+	form_data.append("filename", file_name_bd);
+	form_data.append("method", "POST");
+	form_data.append("communityUuid", currentCommunityUuid);
+
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/UploadDocument", false);
+	xhr.send(form_data);
+};
+
 var displayLastSyncDate = function(data) {
-	var date = new Date(data); ;
-	dojo.query("#icxsynchdate")[0].innerHTML = "Le "+ date.getDate() + "/" + (date.getMonth()+1)+ "/" + date.getFullYear();
+	var date = new Date(data);
+	var day = eval(date.getDate());
+	if(day <10){
+		day = "0"+day;
+	}
+	var month = eval(date.getMonth()+1);
+	if(month <10){
+		month = "0"+month;
+	}
+	dojo.query("#icxsynchdate")[0].innerHTML = "Le "+ day + "/" + month+ "/" + date.getFullYear();
+};
+
+var currentCommunityGroupsPageMax = 1;
+
+var displayCommunityGroupsPage = function (page) {
+	dojo.query(".communitygroup").forEach(function(node){
+		dojo.query(node).style("display", "none");		  
+	});
+	
+	dojo.query(".communitygroup."+page).forEach(function(node){
+		dojo.query(node).style("display", "");		  
+	});
+	
+	dojo.query(".communitygroup.pager").forEach(dojo.destroy);
+	var groupPagerLinks = '<tr class="communitygroup pager">';
+	if(page > 1){
+		groupPagerLinks = groupPagerLinks + '<td><a title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityGroupsPage('+eval(page-1)+');return false;" href="#">&lt;</a></td>';
+	}else{
+		groupPagerLinks = groupPagerLinks + '<td></td>';
+	}
+	if(page < currentCommunityGroupsPageMax){
+		groupPagerLinks = groupPagerLinks + '<td><a title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityGroupsPage('+eval(page+1)+');return false;" href="#">&gt;</a></td><td>';
+	}else{
+		groupPagerLinks = groupPagerLinks + '<td></td>';
+	}
+	groupPagerLinks = groupPagerLinks + '</tr>';
+	if((page > 1) || (page < currentCommunityGroupsPageMax)){
+		dojo.place(groupPagerLinks, dojo.query("#icxcommunitygrouppager")[0], "after");
+	}
 };
 
 var displayCommunityGroups = function (data){
 	var groupName = '';
-	dojo.query(".communitygroup").forEach(function(node){
-		dojo.query(node).style("display", "none");		  
-	});
+	dojo.query(".communitygroup").forEach(dojo.destroy);
+	var page = 1;
+	currentCommunityGroupsPageMax = page;
 	for(var i=1; i<data.length; i++){
+		if(i != 1 && eval(i-1)%5 == 0){
+			page++;
+			currentCommunityGroupsPageMax = page;
+		}
 		console.log(data[i].groupName);
-		groupName = '<tr class="communitygroup"><td>'+data[i].groupName+'</td><td><a onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
+		groupName = '<tr class="communitygroup '+page+'"><td>'+data[i].groupName+'</td><td><a title="Supprimer le groupe '+data[i].groupName+'" onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
 		dojo.place(groupName, dojo.query("#icxcommunitygrouplist")[0], "after");
 	}
 	displayLastSyncDate(data[0].date);
+	displayCommunityGroupsPage(1);
+};
+
+var currentCommunityMembersPageMax = 1;
+
+var displayCommunityMembersPage = function (page) {
+	dojo.query(".communitymember").forEach(function(node){
+		dojo.query(node).style("display", "none");		  
+	});
+	
+	dojo.query(".communitymember."+page).forEach(function(node){
+		dojo.query(node).style("display", "");		  
+	});
+	
+	dojo.query(".communitymember.pager").forEach(dojo.destroy);
+	var memberPagerLinks = '<tr class="communitymember pager">';
+	if(page > 1){
+		memberPagerLinks = memberPagerLinks + '<td><a title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityMembersPage('+eval(page-1)+');return false;" href="#">&lt;</a></td>';
+	}else{
+		memberPagerLinks = memberPagerLinks + '<td></td>';
+	}
+	if(page < currentCommunityMembersPageMax){
+		memberPagerLinks = memberPagerLinks + '<td><a title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityMembersPage('+eval(page+1)+');return false;" href="#">&gt;</a></td><td>';
+	}else{
+		memberPagerLinks = memberPagerLinks + '<td></td>';
+	}
+	memberPagerLinks = memberPagerLinks + '</tr>';
+	if((page > 1) || (page < currentCommunityMembersPageMax)){
+		dojo.place(memberPagerLinks, dojo.query("#icxcommunitymemberpager")[0], "after");
+	}
 };
 
 var displayCommunityMembers = function (data){
 	var memberName = '';
-	dojo.query(".communitymember").forEach(function(node){
-		dojo.query(node).style("display", "none");		  
-	});
+	dojo.query(".communitymember").forEach(dojo.destroy);
+	var page = 1;
+	currentCommunityMembersPageMax = page;
 	for(var i=1; i<data.length; i++){
+		if(i != 1 && eval(i-1)%5 == 0){
+			page++;
+			currentCommunityMembersPageMax = page;
+		}
 		console.log(data[i].memberName);
-		memberName = '<tr class="communitymember"><td>'+data[i].memberName+'</td><td><a onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
+		memberName = '<tr style="display:none" class="communitymember '+page+'"><td>'+data[i].memberName+'</td><td><a title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
 		dojo.place(memberName, dojo.query("#icxcommunitymemberlist")[0], "after");
 	}
 	displayLastSyncDate(data[0].date);
+	displayCommunityMembersPage(1);
 };
 
 var ibmkey = "84ced955-2274-4684-9689-8291b159f8f9";
@@ -213,7 +312,8 @@ if(typeof(dojo) != "undefined") {
 									'<table><tr><td><h3>Gestion des groupes de la communauté <span id="icxcommunityname"></span></h3></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><table><tr><td>Ajout d\'un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
-										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table></td></tr>'+
+										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table>'+
+										'<table><tr id="icxcommunitygrouppager"><td>Groupes membres de la communauté</td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><table><tr><td>Ajout d\'un membre</td><td>'+
 										'<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
@@ -227,7 +327,8 @@ if(typeof(dojo) != "undefined") {
 											'</div>'+
 										'</div>'+
 										'</td><td><button id="icxmemberadd" onclick="addCommunityMember();return false;">Ajouter</button></td></tr></table></td></tr>'+
-										'<tr><td><table><tr id="icxcommunitymemberlist"><td>Membres de la communauté</td></tr></table></td></tr>'+
+										'<tr><td><table><tr id="icxcommunitymemberlist"><td>Membres de la communauté</td></tr></table>'+
+										'<table><tr id="icxcommunitymemberpager"><td></td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><span>Date de la dernière synchronisation:&nbsp;</span><span id="icxsynchdate"></span></td></tr><tr><td><a onclick="myDialog.hide();return false;" href="#">Retour à Connections</a></td></tr>'+
 									'</table>'+
