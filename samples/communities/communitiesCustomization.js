@@ -54,10 +54,14 @@ var displayCommunityGroupsPage = function (page) {
 	dojo.query(".communitygroup.pager").forEach(dojo.destroy);
 	var groupPagerLinks = '<tr class="communitygroup pager"><td><div class="lotusPaging" id=""><ul class="lotusInlinelist lotusLeft">';
 	if(page > 1){
-		groupPagerLinks = groupPagerLinks + '<li class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityGroupsPage('+eval(page-1)+');return false;">Précédent</li>';
+		groupPagerLinks = groupPagerLinks + '<li style="cursor:pointer;font-weight: bold;" class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityGroupsPage('+eval(page-1)+');return false;">Précédent</li>';
+	}else{
+		groupPagerLinks = groupPagerLinks + '<li class="lotusFirst">Précédent</li>';
 	}
 	if(page < currentCommunityGroupsPageMax){
-		groupPagerLinks = groupPagerLinks + '<li title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityGroupsPage('+eval(page+1)+');return false;">Suivant</li>';
+		groupPagerLinks = groupPagerLinks + '<li style="cursor:pointer;font-weight: bold;" title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityGroupsPage('+eval(page+1)+');return false;">Suivant</li>';
+	}else{
+		groupPagerLinks = groupPagerLinks + '<li>Suivant</li>';
 	}
 	groupPagerLinks = groupPagerLinks + '</ul></div></td></tr>';
 	if((page > 1) || (page < currentCommunityGroupsPageMax)){
@@ -97,10 +101,14 @@ var displayCommunityMembersPage = function (page) {
 	dojo.query(".communitymember.pager").forEach(dojo.destroy);
 	var memberPagerLinks = '<tr class="communitymember pager"><td><div class="lotusPaging" id=""><ul class="lotusInlinelist lotusLeft">';
 	if(page > 1){
-		memberPagerLinks = memberPagerLinks + '<li class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityMembersPage('+eval(page-1)+');return false;">Précédent</li>';
+		memberPagerLinks = memberPagerLinks + '<li style="cursor:pointer;font-weight: bold;" class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityMembersPage('+eval(page-1)+');return false;">Précédent</li>';
+	}else{
+		memberPagerLinks = memberPagerLinks + '<li class="lotusFirst">Précédent</li>';
 	}
 	if(page < currentCommunityMembersPageMax){
-		memberPagerLinks = memberPagerLinks + '<li title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityMembersPage('+eval(page+1)+');return false;">Suivant</li>';
+		memberPagerLinks = memberPagerLinks + '<li style="cursor:pointer;font-weight: bold;" title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityMembersPage('+eval(page+1)+');return false;">Suivant</li>';
+	}else{
+		memberPagerLinks = memberPagerLinks + '<li>Suivant</li>';
 	}
 	memberPagerLinks = memberPagerLinks + '</ul></div></td></tr>';
 	if((page > 1) || (page < currentCommunityMembersPageMax)){
@@ -300,14 +308,16 @@ if(typeof(dojo) != "undefined") {
 		var addGroupsLink = function() {
 		
 			if (!dojo.byId("manageGroups")) {
-				var addGroups = '<div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address" style="background: #FFFFFF; border-radius: 5px; padding: 10px !important; border: 1px solid black; width:400px">'+
-									'<table><tr><td><h3>Gestion des groupes de la communauté <span id="icxcommunityname"></span></h3></td></tr>'+
+				var addGroups = '<tr id="manageGroups" class="lotusFormFieldRow">'+
+									'<td colspan="2"><b>La gestion des membres de la communauté se fait à partir du lien ci dessous:</b><br/><a onClick="myDialog.show();return false;" href="#">Gestion des groupes et des membres</a></td>'+
+									'<td><div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address" style="background: #FFFFFF; border-radius: 5px; padding: 10px !important; border: 1px solid black; width:420px">'+
+									'<table><tr><td><h3>Gestion des groupes et des membres de la communauté <span id="icxcommunityname"></span></h3></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><table><tr><td>Ajout d\'un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
-										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table>'+
+										'<tr><td><table style="border:1px solid #c0c0c0; width:100%"><tr><td><b>Ajout d\'un groupe</b></td><td><input id="icxcommunitygroupadd" type="text"></td><td><button class="lotusFormButton" style="padding: 5px 10px 6px 10px; position: relative; top: 2px;" id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
+										'<tr><td><table style="border:1px solid #c0c0c0; width:100%"><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table>'+
 										'<table><tr id="icxcommunitygrouppager"><td></td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><table><tr><td>Ajout d\'un membre</td><td>'+
+										'<tr><td><table style="border:1px solid #c0c0c0; width:100%"><tr><td><b>Ajout d\'un membre</b></td><td>'+
 										'<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
 											'<div class="dijitReset dijitInputField dijitInputContainer">'+
 												'<input id="icxcommunitymemberadd" oninput="changeMemberInput()" onfocus="this.value=\'\'" autocomplete="off" type="text" class="dijitReset dijitInputInner">'+
@@ -318,16 +328,14 @@ if(typeof(dojo) != "undefined") {
 												'<div id="icxcommunitymemberinputlist"></div>'+
 											'</div>'+
 										'</div>'+
-										'</td><td><button id="icxmemberadd" onclick="addCommunityMember();return false;">Ajouter</button></td></tr></table></td></tr>'+
-										'<tr><td><table><tr id="icxcommunitymemberlist"><td>Membres de la communauté</td></tr></table>'+
+										'</td><td><button class="lotusFormButton" style="padding: 5px 10px 6px 10px; position: relative; top: 2px;" id="icxmemberadd" onclick="addCommunityMember();return false;">Ajouter</button></td></tr></table></td></tr>'+
+										'<tr><td><table style="border:1px solid #c0c0c0; width:100%"><tr id="icxcommunitymemberlist"><td>Membres de la communauté</td></tr></table>'+
 										'<table><tr id="icxcommunitymemberpager"><td></td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><span>Date de la dernière synchronisation:&nbsp;</span><span id="icxsynchdate"></span></td></tr><tr><td><a onclick="myDialog.hide();return false;" href="#">Retour à Connections</a></td></tr>'+
 									'</table>'+
 								  '  <div class="dijitDialogPaneActionBar"></div>'+
-								'</div>'+
-								'<tr id="manageGroups" class="lotusFormFieldRow"> '+
-									'<td><a onClick="myDialog.show();return false;" href="#">Gestion des membres</a></td>' +
+								'</div></td>'+
 								'</tr>';
 				
 				if (dojo.query("#addAllParentMembersRow") && dojo.query("#addAllParentMembersRow")[0]) {
