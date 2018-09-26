@@ -52,18 +52,14 @@ var displayCommunityGroupsPage = function (page) {
 	});
 	
 	dojo.query(".communitygroup.pager").forEach(dojo.destroy);
-	var groupPagerLinks = '<tr class="communitygroup pager">';
+	var groupPagerLinks = '<tr class="communitygroup pager"><td><div class="lotusPaging" id=""><ul class="lotusInlinelist lotusLeft">';
 	if(page > 1){
-		groupPagerLinks = groupPagerLinks + '<td><a title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityGroupsPage('+eval(page-1)+');return false;" href="#">&lt;</a></td>';
-	}else{
-		groupPagerLinks = groupPagerLinks + '<td></td>';
+		groupPagerLinks = groupPagerLinks + '<li class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityGroupsPage('+eval(page-1)+');return false;">Précédent</li>';
 	}
 	if(page < currentCommunityGroupsPageMax){
-		groupPagerLinks = groupPagerLinks + '<td><a title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityGroupsPage('+eval(page+1)+');return false;" href="#">&gt;</a></td><td>';
-	}else{
-		groupPagerLinks = groupPagerLinks + '<td></td>';
+		groupPagerLinks = groupPagerLinks + '<li title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityGroupsPage('+eval(page+1)+');return false;">Suivant</li>';
 	}
-	groupPagerLinks = groupPagerLinks + '</tr>';
+	groupPagerLinks = groupPagerLinks + '</ul></div></td></tr>';
 	if((page > 1) || (page < currentCommunityGroupsPageMax)){
 		dojo.place(groupPagerLinks, dojo.query("#icxcommunitygrouppager")[0], "after");
 	}
@@ -99,18 +95,14 @@ var displayCommunityMembersPage = function (page) {
 	});
 	
 	dojo.query(".communitymember.pager").forEach(dojo.destroy);
-	var memberPagerLinks = '<tr class="communitymember pager">';
+	var memberPagerLinks = '<tr class="communitymember pager"><td><div class="lotusPaging" id=""><ul class="lotusInlinelist lotusLeft">';
 	if(page > 1){
-		memberPagerLinks = memberPagerLinks + '<td><a title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityMembersPage('+eval(page-1)+');return false;" href="#">&lt;</a></td>';
-	}else{
-		memberPagerLinks = memberPagerLinks + '<td></td>';
+		memberPagerLinks = memberPagerLinks + '<li class="lotusFirst" title="Aller à la page '+eval(page-1)+'" onclick="displayCommunityMembersPage('+eval(page-1)+');return false;">Précédent</li>';
 	}
 	if(page < currentCommunityMembersPageMax){
-		memberPagerLinks = memberPagerLinks + '<td><a title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityMembersPage('+eval(page+1)+');return false;" href="#">&gt;</a></td><td>';
-	}else{
-		memberPagerLinks = memberPagerLinks + '<td></td>';
+		memberPagerLinks = memberPagerLinks + '<li title="Aller à la page '+eval(page+1)+'" onclick="displayCommunityMembersPage('+eval(page+1)+');return false;">Suivant</li>';
 	}
-	memberPagerLinks = memberPagerLinks + '</tr>';
+	memberPagerLinks = memberPagerLinks + '</ul></div></td></tr>';
 	if((page > 1) || (page < currentCommunityMembersPageMax)){
 		dojo.place(memberPagerLinks, dojo.query("#icxcommunitymemberpager")[0], "after");
 	}
@@ -313,7 +305,7 @@ if(typeof(dojo) != "undefined") {
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><table><tr><td>Ajout d\'un groupe</td><td><input id="icxcommunitygroupadd" type="text"></td><td><button id="icxcommunityadd" onclick="addCommunityGroup();return false;">Ajouter</button></td></tr></table></td></tr>'+
 										'<tr><td><table><tr id="icxcommunitygrouplist"><td>Groupes membres de la communauté</td></tr></table>'+
-										'<table><tr id="icxcommunitygrouppager"><td>Groupes membres de la communauté</td></tr></table></td></tr>'+
+										'<table><tr id="icxcommunitygrouppager"><td></td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
 										'<tr><td><table><tr><td>Ajout d\'un membre</td><td>'+
 										'<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitComboBox dijitValidationTextBox dijitTextBoxFocused dijitComboBoxFocused dijitValidationTextBoxFocused dijitFocused">'+
