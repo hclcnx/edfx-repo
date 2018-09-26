@@ -80,7 +80,7 @@ var displayCommunityGroups = function (data){
 			currentCommunityGroupsPageMax = page;
 		}
 		console.log(data[i].groupName);
-		groupName = '<tr class="communitygroup '+page+'"><td>'+data[i].groupName+'</td><td><a title="Supprimer le groupe '+data[i].groupName+'" onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
+		groupName = '<tr class="communitygroup '+page+'"><td>'+data[i].groupName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le groupe '+data[i].groupName+'" onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
 		dojo.place(groupName, dojo.query("#icxcommunitygrouplist")[0], "after");
 	}
 	displayLastSyncDate(data[0].date);
@@ -127,7 +127,7 @@ var displayCommunityMembers = function (data){
 			currentCommunityMembersPageMax = page;
 		}
 		console.log(data[i].memberName);
-		memberName = '<tr style="display:none" class="communitymember '+page+'"><td>'+data[i].memberName+'</td><td><a title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
+		memberName = '<tr style="display:none" class="communitymember '+page+'"><td>'+data[i].memberName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
 		dojo.place(memberName, dojo.query("#icxcommunitymemberlist")[0], "after");
 	}
 	displayLastSyncDate(data[0].date);
