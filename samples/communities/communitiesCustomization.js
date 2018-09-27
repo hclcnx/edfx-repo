@@ -235,7 +235,7 @@ var getCommunityGroups = function() {
 var getCommunityMembers = function() {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid=b33aa70e-6298-41c1-900e-d560f36a61fd",
+		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
@@ -309,7 +309,7 @@ if(typeof(dojo) != "undefined") {
 		
 			if (!dojo.byId("manageGroups")) {
 				var addGroups = '<tr id="manageGroups" class="lotusFormFieldRow">'+
-									'<td colspan="2"><b>La gestion des membres (non les propriétaires) de la communauté se fait à partir du lien ci dessous:</b><br/><a onClick="myDialog.show();return false;" href="#">Gestion des groupes et des membres</a></td>'+
+									'<td colspan="2"><b>Si vous avez besoin d’ajouter des groupes, la gestion des membres de la communauté se fait à partir du lien ci-dessous. La gestion des propriétaires est inchangée, et se fait dans la section ci-dessus.</b><br/><a onClick="myDialog.show();return false;" href="#">Gestion des groupes et des membres</a></td>'+
 									'<td><div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Name and Address" style="background: #FFFFFF; border-radius: 5px; padding: 10px !important; border: 1px solid black; width:420px">'+
 									'<table><tr><td><h3>Gestion des groupes et des membres de la communauté <span id="icxcommunityname"></span></h3></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+

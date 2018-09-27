@@ -1,0 +1,25 @@
+{
+    "name": "Translator Customization",
+    "title": "Translator Customization",
+    "description": "Add translator in header",
+    "services": [
+        "Customizer"
+    ],
+    "extensions": [
+        {
+            "id": "819b1361-e788-4d2f-ad08-2b1357947851",
+            "name": "Translator Customization Extension",
+            "type": "com.ibm.customizer.ui",
+            "payload": {
+                "include-files": [
+                    "samples/communities/TranslatorCustomization.js"
+                ],
+                "include-repo": {
+                    "name": "edfx-repo"
+                }
+            },
+            "path": "TopNavigationBar",
+            "application": "Translator Customization"
+        }
+    ]
+}
