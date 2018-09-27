@@ -142,7 +142,7 @@ var removeCommunityGroup = function(groupName) {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
 		},
 
 		load : function(data) {
@@ -160,7 +160,7 @@ var removeCommunityMember = function(memberName, memberEmail) {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
 		},
 
 		load : function(data) {
@@ -178,7 +178,7 @@ var addCommunityGroup = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
 		},
 
 		load : function(data) {
@@ -198,7 +198,7 @@ var addCommunityMember = function() {
 		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").membername+"&memberEmail="+dojo.byId("icxcommunitymemberadd").membermail,
 		handleAs : "json",
 		headers : {
-			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
+			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
 		},
 
 		load : function(data) {
