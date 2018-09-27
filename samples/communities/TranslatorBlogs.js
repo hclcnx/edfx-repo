@@ -1,4 +1,4 @@
-dojo.provide("com.edifixio.connections.textTranslator.blog.entry");
+setTimeout(function(){
 
 dojo.provide("com.edifixio.connections.textTranslator.blog.entry");
 
@@ -47,3 +47,5 @@ dojo.provide("com.edifixio.connections.textTranslator.blog.entry");
         }
     })
 })();
+
+}, 2500);
