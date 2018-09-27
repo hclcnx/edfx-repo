@@ -1,3 +1,5 @@
+setTimeout(function(){
+	
 dojo.provide("com.edifixio.connections.media.js.utils");
 
 (function () {
@@ -295,6 +297,57 @@ dojo.provide("com.edifixio.connections.media.js.dom");
                         , "Cloud": {
                             header: {
                                 menu: ".ics-scbanner", logoutBtn: "#logoutLi"
+                            }
+                            , blog: {
+                                entry: {
+                                    blogTitle: "h1 .bidiAware", title: "#entries .lotusTable .lotusFirst .entryContentContainerTD h4", content: "#entries .lotusTable .lotusFirst .entryContentContainerTD .entryContentContainer", actionsMenu: "#lotusContent > .lotusActionBar"
+                                }
+                                , comment: {
+                                    container: ".lotusPostContent.lotusForum", content: "p.blogsWrapText", actionsMenu: ".lotusInlinelist"
+                                }
+                            }
+                            , wiki: {
+                                entry: {
+                                    title: ".lotusMain .lotusContent .wikiHeader .lotusHeader h1", content: ".lotusMain .lotusContent #pageDetails #wikiContentDiv div", actionsMenu: ".lotusMain .lotusContent .wikiHeader .lotusHeader .lotusBtnContainer"
+                                }
+                                , comment: {
+                                    container: ".lotusPostContent", actionsMenu: ".lotusInlinelist", actionsMenuContainer: ".lotusPostDetails", content: ".lotusPostDetails p"
+                                }
+                            }
+                            , forum: {
+                                post: {
+                                    container: ".hentry.lotusPost", content: ".entry-content.lotusPostDetails", actionsMenu: ".lotusActions .lotusInlinelist"
+                                }
+                            }
+                            , file: {
+                                comment: {
+                                    container: ".comment", content: ".textContainer .bidiAware", footer: ".footer"
+                                }
+                            }
+                            , activityStream: {
+                                sharebox: {
+                                    container: ".streamSharebox", actionsMenu: ".lotusInlinelist.lotusLeft", content: ".lotusMentionsDiv", contentIframe: "[id^='lconn_news_microblogging_sharebox'] iframe", contentWithinContentIframe: "p"
+                                }
+                                , post: {
+                                    footer: ".lotusMeta.lotusChunk"
+                                }
+                                , comment: {
+                                    container: ".lotusCommentItem .lotusPost", content: ".lotusPostDetails .bidiAware", contentIncludingShowMore: ".lotusPostDetails", actionsMenu: ".lotusInlinelist"
+                                }
+                            }
+                            , profile: {
+                                background: {
+                                    tab: "#backgroundInfo_TabItem", container: "#backgroundInfoSection", content: "#_backgroundInfo_profileDetails_widget_container"
+                                }
+                            }
+                            , community: {
+                                description: {
+                                    subcontainer: "#descContent", content: ".communityOverview", actionsMenu: ".lotusMeta"
+                                }
+                            }
+                        }, "Sharepoint": {
+                            header: {
+                                menu: ".ms-cui-tts", logoutBtn: "#logoutLi"
                             }
                             , blog: {
                                 entry: {
@@ -941,3 +994,5 @@ dojo.provide("com.edifixio.connections.textTranslator.header");
   });
 
 })();
+
+}, 1500);
