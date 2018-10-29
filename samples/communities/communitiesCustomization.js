@@ -4,6 +4,32 @@
 // @version 0.2
 // @date September, 2018
 //
+var isCommunityOwner = function() {
+
+	dojo.xhrGet({
+		url : "/communities/userinfo.do?&resourceId="+currentCommunityUuid+"&requestTime="+new Date().getTime(),
+		handleAs : "xml",
+
+		load : function(data) {
+			var isOwner = data.documentElement.outerHTML;
+			
+			if(isOwner.indexOf("canContribute") == -1){
+				dojo.query("#manageGroups").forEach(dojo.destroy);
+				console.log("isOwner:false");
+			}else if(isOwner.indexOf("canContribute=\"false\"") != -1){
+				dojo.query("#manageGroups").forEach(dojo.destroy);
+				console.log("isOwner:false");
+			}else{
+				console.log("isOwner:true");
+			}
+		},
+		error : function(error) {
+			dojo.query("#manageGroups").forEach(dojo.destroy);
+			console.log(error);
+		}
+	});
+};
+
 var dropUpload_input2 = function dropUpload_input2() {
 
 	var files = document.getElementById("newfileinput2").files;
@@ -360,6 +386,8 @@ if(typeof(dojo) != "undefined") {
 						searchAttr: "name"
 					}, "icxcommunitygroupadd");
 					select.startup();
+					
+					isCommunityOwner();
 				}				
 			}
 		};
