@@ -1,8 +1,8 @@
 ////
 // @author Nicolas Lantheaume / EDIFIXIO
 // @name Communities Customization
-// @version 0.2
-// @date September, 2018
+// @version 0.4
+// @date November, 2018
 //
 var isCommunityOwner = function() {
 
@@ -387,7 +387,7 @@ if(typeof(dojo) != "undefined") {
 					}, "icxcommunitygroupadd");
 					select.startup();
 					
-					isCommunityOwner();
+					//isCommunityOwner();
 				}				
 			}
 		};
