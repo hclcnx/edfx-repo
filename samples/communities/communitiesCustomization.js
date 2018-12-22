@@ -1,8 +1,8 @@
 ////
 // @author Nicolas Lantheaume / EDIFIXIO
 // @name Communities Customization
-// @version 0.4
-// @date November, 2018
+// @version 0.5
+// @date December, 2018
 //
 var isCommunityOwner = function() {
 
@@ -49,7 +49,7 @@ var upload_bd = function (file, i, size) {
 	form_data.append("communityUuid", currentCommunityUuid);
 
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/UploadDocument", false);
+	xhr.open("POST", tomcat_url+"/UploadDocument", false);
 	xhr.send(form_data);
 };
 
@@ -160,12 +160,10 @@ var displayCommunityMembers = function (data){
 	displayCommunityMembersPage(1);
 };
 
-var ibmkey = "84ced955-2274-4684-9689-8291b159f8f9";
-
 var removeCommunityGroup = function(groupName) {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
+		url : tomcat_url+"/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -183,7 +181,7 @@ var removeCommunityGroup = function(groupName) {
 var removeCommunityMember = function(memberName, memberEmail) {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
+		url : tomcat_url+"/RemoveMember?communityUid="+currentCommunityUuid+"&memberName="+memberName+"&memberEmail="+memberEmail,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -201,7 +199,7 @@ var removeCommunityMember = function(memberName, memberEmail) {
 var addCommunityGroup = function() {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
+		url : tomcat_url+"/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -221,7 +219,7 @@ var addCommunityGroup = function() {
 var addCommunityMember = function() {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").membername+"&memberEmail="+dojo.byId("icxcommunitymemberadd").membermail,
+		url : tomcat_url+"/AddMember?communityUid="+currentCommunityUuid+"&memberName="+dojo.byId("icxcommunitymemberadd").membername+"&memberEmail="+dojo.byId("icxcommunitymemberadd").membermail,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -241,7 +239,7 @@ var addCommunityMember = function() {
 var getCommunityGroups = function() {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetGroups?communityUid="+currentCommunityUuid,
+		url : tomcat_url+"/GetGroups?communityUid="+currentCommunityUuid,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
@@ -261,7 +259,7 @@ var getCommunityGroups = function() {
 var getCommunityMembers = function() {
 
 	dojo.xhrGet({
-		url : "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetMembers?communityUid="+currentCommunityUuid,
+		url : tomcat_url+"/GetMembers?communityUid="+currentCommunityUuid,
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey
@@ -375,7 +373,7 @@ if(typeof(dojo) != "undefined") {
 					getCommunityMembers();
 					
 					var stateStore = new ItemFileReadStore({
-				        url: "https://edfx-ldc.edifixio-online.com:8443/ConnectionsCloud/GetDominoGroups?ibmkey="+ibmkey
+				        url: tomcat_url+"/GetDominoGroups?ibmkey="+ibmkey
 				    });
 
 					var select = new FilteringSelect({
