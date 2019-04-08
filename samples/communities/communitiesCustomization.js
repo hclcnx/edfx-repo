@@ -1,9 +1,15 @@
 ////
-// @author Nicolas Lantheaume / EDIFIXIO
+// @author EDIFIXIO
 // @name Communities Customization
-// @version 0.5
-// @date December, 2018
+// @version 0.6
+// @date April, 2019
 //
+var url_encode = function ( url ) {
+    return url.split( '' ).map(function ( c ) {
+        return /[ÀÈÉÊàèéêë]/.test( c ) ? '%' + c.charCodeAt( 0 ).toString( 16 ).toUpperCase() : c;
+    }).join( '' );
+};
+
 var isCommunityOwner = function() {
 
 	dojo.xhrGet({
@@ -106,6 +112,8 @@ var displayCommunityGroups = function (data){
 			currentCommunityGroupsPageMax = page;
 		}
 		console.log(data[i].groupName);
+		dojo.query("#memberAddForm table tr")[2].style="display:none";
+		dojo.query("#memberAddForm table tr")[3].style="display:none";
 		groupNameList = groupNameList + '<tr class="communitygroup '+page+'"><td>'+data[i].groupName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le groupe '+data[i].groupName+'" onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
 	}
 	dojo.place(groupNameList, dojo.query("#icxcommunitygrouplist")[0], "after");
@@ -153,6 +161,8 @@ var displayCommunityMembers = function (data){
 			currentCommunityMembersPageMax = page;
 		}
 		console.log(data[i].memberName);
+		dojo.query("#memberAddForm table tr")[2].style="display:none";
+		dojo.query("#memberAddForm table tr")[3].style="display:none";
 		memberNameList = memberNameList + '<tr style="display:none" class="communitymember '+page+'"><td>'+data[i].memberName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
 	}
 	dojo.place(memberNameList, dojo.query("#icxcommunitymemberlist")[0], "after");
@@ -163,7 +173,7 @@ var displayCommunityMembers = function (data){
 var removeCommunityGroup = function(groupName) {
 
 	dojo.xhrGet({
-		url : tomcat_url+"/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+groupName,
+		url : tomcat_url+"/RemoveGroup?communityUid="+currentCommunityUuid+"&groupName="+url_encode(groupName),
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -199,7 +209,7 @@ var removeCommunityMember = function(memberName, memberEmail) {
 var addCommunityGroup = function() {
 
 	dojo.xhrGet({
-		url : tomcat_url+"/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+dojo.byId("dijiticxcommunitygroupadd").value,
+		url : tomcat_url+"/AddGroup?communityUid="+currentCommunityUuid+"&groupName="+url_encode(dojo.byId("dijiticxcommunitygroupadd").value),
 		handleAs : "json",
 		headers : {
 			"Content-Type" : "application/json", "X-IBM-Token" : ibmkey, "userId" : gllConnectionsData.userId, "userName" : gllConnectionsData.userName
@@ -356,7 +366,7 @@ if(typeof(dojo) != "undefined") {
 										'<tr><td><table style="border:1px solid #c0c0c0; width:100%"><tr id="icxcommunitymemberlist"><td colspan="2" style="font-weight: bold;background: #f0f0f0;"><b>Membres de la communauté</b></td></tr></table>'+
 										'<table><tr id="icxcommunitymemberpager"><td></td></tr></table></td></tr>'+
 										'<tr><td><div class="dijitDialogPaneActionBar"></div></td></tr>'+
-										'<tr><td><span>Date de la dernière synchronisation:&nbsp;</span><span id="icxsynchdate"></span></td></tr><tr><td><a onclick="myDialog.hide();return false;" href="#">Retour à Connections</a></td></tr>'+
+										'<tr><td><span>Date de la dernière synchronisation:&nbsp;</span><span id="icxsynchdate"></span></td></tr><tr><td><a onclick="myDialog.hide();_Members_iContext.iScope().cancelMemberCreateForm();dojo.byId(\'memberAddButtonLink\').focus(); return false;" href="#">Retour à Connections</a></td></tr>'+
 									'</table>'+
 								  '  <div class="dijitDialogPaneActionBar"></div>'+
 								'</div></td>'+
@@ -403,6 +413,14 @@ if(typeof(dojo) != "undefined") {
 			if (hashValue == "#fullpageWidgetId=Members") {
 				waitFor(renderMemberGroupCreateForm, "#memberAddButtonLink");
 			}
+			
+			require(["dojo/on", "dojo/dom"],
+			 function(on, dom) {
+			    var myButton = dom.byId("memberAddButtonLink");
+		        on(myButton, "click", function(evt){
+					renderMemberGroupCreateForm();
+		        });
+			 });
 		}
 		
 		 //listen for onHashChange event
