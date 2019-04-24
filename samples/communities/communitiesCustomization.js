@@ -112,8 +112,6 @@ var displayCommunityGroups = function (data){
 			currentCommunityGroupsPageMax = page;
 		}
 		console.log(data[i].groupName);
-		dojo.query("#memberAddForm table tr")[2].style="display:none";
-		dojo.query("#memberAddForm table tr")[3].style="display:none";
 		groupNameList = groupNameList + '<tr class="communitygroup '+page+'"><td>'+data[i].groupName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le groupe '+data[i].groupName+'" onclick="removeCommunityGroup(\''+data[i].groupName+'\');return false;" href="#">Supprimer</a></td></tr>';
 	}
 	dojo.place(groupNameList, dojo.query("#icxcommunitygrouplist")[0], "after");
@@ -161,9 +159,7 @@ var displayCommunityMembers = function (data){
 			currentCommunityMembersPageMax = page;
 		}
 		console.log(data[i].memberName);
-		dojo.query("#memberAddForm table tr")[2].style="display:none";
-		dojo.query("#memberAddForm table tr")[3].style="display:none";
-		memberNameList = memberNameList + '<tr style="display:none" class="communitymember '+page+'"><td>'+data[i].memberName+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
+		memberNameList = memberNameList + '<tr style="display:none" class="communitymember '+page+'"><td>'+decodeURIComponent(data[i].memberName)+'</td><td><a style="position:relative;right:10px;float:right" title="Supprimer le membre '+data[i].memberName+'" onclick="removeCommunityMember(\''+data[i].memberName+'\', \''+data[i].memberEmail+'\');return false;" href="#">Supprimer</a></td></tr>';
 	}
 	dojo.place(memberNameList, dojo.query("#icxcommunitymemberlist")[0], "after");
 	displayLastSyncDate(data[0].date);
@@ -413,14 +409,6 @@ if(typeof(dojo) != "undefined") {
 			if (hashValue == "#fullpageWidgetId=Members") {
 				waitFor(renderMemberGroupCreateForm, "#memberAddButtonLink");
 			}
-			
-			require(["dojo/on", "dojo/dom"],
-			 function(on, dom) {
-			    var myButton = dom.byId("memberAddButtonLink");
-		        on(myButton, "click", function(evt){
-					renderMemberGroupCreateForm();
-		        });
-			 });
 		}
 		
 		 //listen for onHashChange event
