@@ -1,7 +1,7 @@
 ////
 // @author EDIFIXIO
 // @name Communities Customization
-// @version 0.6
+// @version 0.7
 // @date April, 2019
 //
 var url_encode = function ( url ) {
@@ -324,7 +324,7 @@ if(typeof(dojo) != "undefined") {
 		 
 		var waitFor = function(callback, elXpath, maxInter, waitTime) {
 			if(!maxInter) var maxInter = 20;  // number of intervals before expiring
-			if(!waitTime) var waitTime = 100;  // 1000=1 second
+			if(!waitTime) var waitTime = 3000;  // 1000=1 second
 			if(!elXpath) return;
 
 			var waitInter = 0;  // current interval
@@ -336,6 +336,8 @@ if(typeof(dojo) != "undefined") {
 		};
 		
 		var addGroupsLink = function() {
+			
+			console.log("addGroupsLink");
 		
 			if (!dojo.byId("manageGroups")) {
 				var addGroups = '<tr id="manageGroups" class="lotusFormFieldRow">'+
@@ -398,6 +400,8 @@ if(typeof(dojo) != "undefined") {
 		
 		var renderMemberGroupCreateForm = function() {
 			require(["dojo/aspect"], function(aspect) { 
+				
+				console.log("renderMemberGroupCreateForm");
 				aspect.after(dojo,"displayMemberCreateForm", addGroupsLink(), true) 
 			});			
 		};
